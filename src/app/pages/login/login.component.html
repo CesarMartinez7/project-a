@@ -1,0 +1,36 @@
+<div class="fade-in min-h-screen h-screen grid place-content-center" style="background: radial-gradient(ellipse 80% 60% at 70% 20%, rgba(175, 109, 255, 0.85), transparent 68%),
+radial-gradient(ellipse 70% 60% at 20% 80%, rgba(255, 100, 180, 0.75), transparent 68%),
+radial-gradient(ellipse 60% 50% at 60% 65%, rgba(255, 235, 170, 0.98), transparent 68%),
+radial-gradient(ellipse 65% 40% at 50% 60%, rgba(120, 190, 255, 0.3), transparent 68%),
+linear-gradient(180deg, #f7eaff 0%, #fde2ea 100%);">
+  <div class="shadow-xl p-6 w-80 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200">
+    <div class="flex relative  items-stretch  gap-2 my-6">
+        
+          <span class="arcticons--870-games-2 "></span>
+        
+        <h3 class=" text-xl ml-3 font-bold text-slate-700 self-end sticky bottom-0">Inicio sesión</h3>
+      </div>
+      
+    <form class="flex flex-col gap-3" [formGroup]="form" (submit)="handleSubmitForm()">    
+  
+      <input 
+        formControlName="nombre"
+        type="nombre"
+        placeholder="Nombre" 
+        class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 bg-white/70 text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent transition-all"
+      />
+    
+
+      <input 
+        formControlName="contrasena"
+        type="password"
+        placeholder="Contraseña" 
+        class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 bg-white/70 text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
+      />
+      
+
+      <button class="mt-2 w-full py-2 rounded-lg bg-violet-500 text-white text-sm font-semibold shadow-md hover:bg-violet-600 transition-all hover:scale-105" >Iniciar</button>
+      <a class="text-xs text-center text-violet-500 underline my-2" routerLink="/registro"  >No tienes cuenta? Registrate.</a>
+    </form>
+  </div>
+</div>
