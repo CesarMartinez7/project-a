@@ -61,8 +61,7 @@ export class LoginComponent implements OnInit { // Implements OnInit is necessar
       },
       error: (e) => {
         console.error("Error en la petición:", e);
-        this._SERVICE_HTTP.__NOTYF.error("Ocurrio un error al iniciar sesion.")
-        alert("Ocurrió un error. Por favor, intenta de nuevo.");
+        this._SERVICE_HTTP.__NOTYF.error("Ocurrio un error al iniciar sesion.")  
       }
     });
   }

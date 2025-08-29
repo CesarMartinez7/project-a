@@ -10,7 +10,7 @@ import { GlobalService } from '../../core/services/http.service';
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [NavbarComponent, NgIcon, CommonModule, RouterModule, FormsModule], // Cambiado ReactiveFormsModule por FormsModule
+  imports: [NavbarComponent, CommonModule, RouterModule, FormsModule], // Cambiado ReactiveFormsModule por FormsModule
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css',
   viewProviders: [provideIcons({ featherUsers })]
@@ -19,8 +19,8 @@ export class ProductosComponent implements OnInit {
 
   __GLOBAL_SERVICE = inject(GlobalService);
 
-  dataResponseCategorias!: any;
-  dataReponseProductos!: any;
+  dataResponseCategorias!: any[];
+  dataReponseProductos!: any[];
 
   // Estados para los modales
   isOpenModalCrear = false;
@@ -34,7 +34,7 @@ export class ProductosComponent implements OnInit {
     descripcion: '',
     category_id: '',
     cantidad: 0,
-    precio: 0
+    price: 0
   };
 
   // Objeto para editar producto
@@ -44,7 +44,7 @@ export class ProductosComponent implements OnInit {
     descripcion: '',
     category_id: '',
     cantidad: 0,
-    precio: 0
+    price: 0
   };
 
   constructor() {}
@@ -54,7 +54,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getCategorias(){
-    this.__GLOBAL_SERVICE.__HTTP.get("http://127.0.0.1:8000/view_category/data").subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.get<any[]>("http://127.0.0.1:8000/view_category/data").subscribe({
       next: (resp) => {
         this.dataResponseCategorias = resp
       },error: (err) => {
@@ -68,7 +68,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getProductos() {
-    this.__GLOBAL_SERVICE.__HTTP.get("http://127.0.0.1:8000/view_product/data").subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.get<any[]>("http://127.0.0.1:8000/view_product/data").subscribe({
       next: (resp) => {
         this.dataReponseProductos = resp;
         console.log(this.dataReponseProductos)
@@ -96,17 +96,18 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-  // =============== MÉTODOS PARA CREAR PRODUCTO ===============
+
 
   // Abrir modal de crear producto
   openCrearModal() {
+
     // Limpiar el formulario
     this.nuevoProducto = {
       nombre: '',
       descripcion: '',
       category_id: '',
       cantidad: 0,
-      precio: 0
+      price: 0
     };
     this.isOpenModalCrear = true;
   }
@@ -120,7 +121,7 @@ export class ProductosComponent implements OnInit {
       descripcion: '',
       category_id: '',
       cantidad: 0,
-      precio: 0
+      price: 0
     };
   }
 
@@ -129,17 +130,17 @@ export class ProductosComponent implements OnInit {
     // Validaciones básicas
     if (!this.nuevoProducto.nombre || !this.nuevoProducto.descripcion || 
         !this.nuevoProducto.category_id || this.nuevoProducto.cantidad <= 0 || 
-        this.nuevoProducto.precio <= 0) {
+        this.nuevoProducto.price <= 0) {
       this.__GLOBAL_SERVICE.__NOTYF.error("Por favor, complete todos los campos correctamente.");
       return;
     }
 
     const body = {
-      nombre: this.nuevoProducto.nombre,
-      descripcion: this.nuevoProducto.descripcion,
+      name: this.nuevoProducto.nombre,
+      description: this.nuevoProducto.descripcion,
       category_id: this.nuevoProducto.category_id,
-      cantidad: this.nuevoProducto.cantidad,
-      precio: this.nuevoProducto.precio
+      cant: this.nuevoProducto.cantidad,
+      price: this.nuevoProducto.price
     };
 
     this.__GLOBAL_SERVICE.__HTTP.post('http://127.0.0.1:8000/create_product/', body).subscribe({
@@ -151,7 +152,7 @@ export class ProductosComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.__GLOBAL_SERVICE.__NOTYF.error("Error al crear el producto");
+        this.__GLOBAL_SERVICE.__NOTYF.error("Error al crear el producto intente de nuevo");
       }
     });
   }
@@ -165,9 +166,9 @@ export class ProductosComponent implements OnInit {
       id: item.id,
       nombre: item.nombre,
       descripcion: item.descripcion,
-      category_id: item.categoria, // Nota: podría necesitar ajuste según la estructura de datos
+      category_id: item.categoria, 
       cantidad: item.cantidad,
-      precio: item.precio
+      price: item.price
     };
     this.isOpenModalEditar = true;
   }
@@ -182,7 +183,7 @@ export class ProductosComponent implements OnInit {
       descripcion: '',
       category_id: '',
       cantidad: 0,
-      precio: 0
+      price: 0
     };
   }
 
@@ -191,26 +192,26 @@ export class ProductosComponent implements OnInit {
     // Validaciones básicas
     if (!this.productoEditar.nombre || !this.productoEditar.descripcion || 
         !this.productoEditar.category_id || this.productoEditar.cantidad <= 0 || 
-        this.productoEditar.precio <= 0) {
+        this.productoEditar.price <= 0) {
       this.__GLOBAL_SERVICE.__NOTYF.error("Por favor, complete todos los campos correctamente.");
       return;
     }
 
     const body = {
       id: this.productoEditar.id,
-      nombre: this.productoEditar.nombre,
-      descripcion: this.productoEditar.descripcion,
+      name: this.productoEditar.nombre,
+      description: this.productoEditar.descripcion,
       category_id: this.productoEditar.category_id,
-      cantidad: this.productoEditar.cantidad,
-      precio: this.productoEditar.precio
+      cant: this.productoEditar.cantidad,
+      price: this.productoEditar.price
     };
 
-    this.__GLOBAL_SERVICE.__HTTP.post(`http://127.0.0.1:8000/edit_product/`, body).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.put(`http://127.0.0.1:8000/edit_product/`, body).subscribe({
       next: (resp) => {
         console.log(resp)
         this.__GLOBAL_SERVICE.__NOTYF.success("Producto actualizado correctamente");
-        this.getProductos(); // Actualizar la lista de productos
-        this.closeEditarModal(); // Cerrar la modal después de guardar
+        this.getProductos(); 
+        this.closeEditarModal(); 
       },
       error: (err) => {
         console.log(err);

@@ -1,5 +1,5 @@
 <div
-  class="min-h-screen w-full bg-white backdrop-blur-3xl text-xs"
+  class="min-h-screen w-full bg-white backdrop-blur-3xl text-xs "
   style="
     background: white;
     background-image: radial-gradient(
@@ -9,16 +9,19 @@
     );
   "
 >
-  <app-navbar />
+<app-navbar />
+<div class="arcticons--870-games-big  text-slate-200/30 absolute inset-0 pointer-events-none z-10">
+dsfdf
+</div>
   <div class="md:px-12 px-4 py-5">
     <div class="flex justify-between items-center">
       <h3 class="text-slate-700 font-bold text-2xl my-5">Dashboard Gestion</h3>
       <div class="flex gap-4">
         <button class="btn-primary" (click)="openCrearModal()">Agregar producto</button>
-        <button class="btn-primary" (click)="goToCategorias()">
+        <button class="btn-primary"   (click)="goToCategorias()">
           Categorias
         </button>
-        <button class="btn-primary" (click)="goToProductos()">Registros</button>
+        <button class="btn-primary"   (click)="goToProductos()">Registros</button>
       </div>
     </div>
 
@@ -38,64 +41,73 @@
         </tr>
       </thead>
       <tbody class="bg-slate-100 text-red-700">
-        @for (item of dataReponseProductos; track item.id) {
-        <tr >
-          <td
-            class="border-b border-slate-200  text-slate-700 dark:border-gray-200 text-center "
-          >
-            {{ item.id }}
-          </td>
-          <td
-            class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
-          >
-            {{ item.nombre }}
-          </td>
-          <td
-            class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
-          >
-            {{ item.descripcion }}
-          </td>
-          <td
-            class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
-          >
-            {{ item.cantidad }}
-          </td>
-          <td
-            class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
-          >
-            $ {{ item.precio }}
-          </td>
-          <td
-            class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
-          >
-            <span>
-              {{ item.categoria }}
-            </span>
-          </td>
-          <td
-            class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 flex gap-2 text-center flex-wrap"
-          >
-            <button
-              (click)="handleClickComprar(item.id)"
-              class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 text-center"
+
+        @if (dataReponseProductos.length === 0) {
+          <div class="fade-in  w-full bg-slate-50 h-[80vh] justify-center items-center flex">
+            <span>No hay categorias actualmente</span>
+          </div>
+        }@else {
+          @for (item of dataReponseProductos; track item.id) {
+          <tr >
+            <td
+              class="border-b border-slate-200  text-slate-700 dark:border-gray-200 text-center "
             >
-              Comprar
-            </button>
-            <button
-              (click)="openEditarModal(item)"
-              class="bg-amber-500 text-white p-2 rounded-lg hover:bg-amber-600"
+              {{ item.id }}
+            </td>
+            <td
+              class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
             >
-              Editar
-            </button>
-            <button
-              class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600"
-              (click)="handleClickDeleteProducto(item.id)"
+              {{ item.nombre }}
+            </td>
+            <td
+              class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
             >
-              Eliminar
-            </button>
-          </td>
-        </tr>
+              {{ item.descripcion }}
+            </td>
+            <td
+              class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
+            >
+              {{ item.cantidad }}
+            </td>
+            <td
+              class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
+            >
+              $ {{ item.precio }}
+            </td>
+            <td
+              class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center"
+            >
+              <span>
+                {{ item.categoria }}
+              </span>
+            </td>
+            <td
+              class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 flex gap-2 text-center flex-wrap"
+            >
+              <button
+                (click)="handleClickComprar(item.id)"
+                class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 text-center"
+              >
+                Comprar
+              </button>
+              <button
+                (click)="openEditarModal(item)"
+                class="bg-amber-500 text-white p-2 rounded-lg hover:bg-amber-600"
+              >
+                Editar
+              </button>
+              <button
+                class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600"
+                (click)="handleClickDeleteProducto(item.id)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+          }
+
         }
+
       </tbody>
     </table>
     } @if (selectedIdx === 2) {
@@ -125,7 +137,7 @@
     <div
       class="bg-white p-6 rounded-lg shadow-xl w-11/12 md:w-1/2 lg:w-md fade-in"
     >
-      <div class="flex justify-between items-center border-b pb-3 mb-4">
+      <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-4">
         <h4 class="text-xl font-semibold text-slate-800">Crear Producto</h4>
         <button
           (click)="closeCrearModal()"
@@ -190,7 +202,7 @@
         <input
           type="number"
           class="base-input"
-          [(ngModel)]="nuevoProducto.precio"
+          [(ngModel)]="nuevoProducto.price"
           placeholder="Ingrese el precio"
           min="0"
           step="0.01"
@@ -225,7 +237,7 @@
     <div
       class="bg-white p-6 rounded-lg shadow-xl w-11/12 md:w-1/2 lg:w-md fade-in"
     >
-      <div class="flex justify-between items-center border-b pb-3 mb-4">
+      <div class="flex justify-between items-center border-b border-slate-500 pb-3 mb-4">
         <h4 class="text-xl font-semibold text-slate-800">Editar Producto</h4>
         <button
           (click)="closeEditarModal()"
@@ -297,7 +309,7 @@
         <input
           type="number"
           class="base-input"
-          [(ngModel)]="productoEditar.precio"
+          [(ngModel)]="productoEditar.price"
           placeholder="Ingrese el precio"
           min="0"
           step="0.01"
