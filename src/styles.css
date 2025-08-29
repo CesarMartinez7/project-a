@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
+
+
 .montserrat {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -28,6 +30,15 @@
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
+}
+
+
+button{
+  @apply cursor-pointer
+}
+
+.base-input{
+  @apply w-full text-sm px-3 py-2 rounded-lg border border-slate-200 bg-white/70 text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent transition-all
 }
 
 .arcticons--870-games-2 {

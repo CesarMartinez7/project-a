@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit { // Implements OnInit is necessar
 
   handleSubmitForm() {
     
-    if (this.form.invalid) {
-      alert('Por favor, completa todos los campos.');
+    if (this.form.invalid) {      
+      this._SERVICE_HTTP.__NOTYF.error("Por favor, completa todos los campos.")
       return;
     }
 
@@ -54,11 +54,14 @@ export class LoginComponent implements OnInit { // Implements OnInit is necessar
       next: (res) => {
         this.response = res;
         console.log(res)
-        console.log("Respuesta del servidor:", this.response);
-        this._ROUTER.navigateByUrl("/productos")
+        if(this.response.success){
+          this._ROUTER.navigateByUrl("/productos")
+        }
+        this._SERVICE_HTTP.__NOTYF.error("Valide que sus datos esten correctamente")
       },
       error: (e) => {
         console.error("Error en la petición:", e);
+        this._SERVICE_HTTP.__NOTYF.error("Ocurrio un error al iniciar sesion.")
         alert("Ocurrió un error. Por favor, intenta de nuevo.");
       }
     });

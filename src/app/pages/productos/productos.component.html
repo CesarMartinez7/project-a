@@ -1,11 +1,10 @@
-<div class="min-h-screen w-full bg-white backdrop-blur-3xl text-xs"   style="
+<div class="min-h-screen w-full bg-white backdrop-blur-3xl text-xs" style="
 background: white;
 background-image: radial-gradient(
-  circle at top center,
-  rgba(59, 130, 246, 0.5),
+  circle at top left,
+  rgba(59, 130, 246, 0.3),
   transparent 70%
 );
-
 ">
   <app-navbar />
   <div class="md:px-12 px-4 py-5">
@@ -24,7 +23,6 @@ background-image: radial-gradient(
       <table
         class="table-fixed text-slate-700 w-full text-xs overflow-y-auto max-h-[80%] fade-in"
       >
-  
         <thead>
           <tr>
             <th class="p-3 bg-slate-200">Id</th>
@@ -36,8 +34,8 @@ background-image: radial-gradient(
             <th class="p-3 bg-slate-200">Opciones</th>
           </tr>
         </thead>
-        <tbody class="bg-slate-100 ">
-          @for (item of dataReponseProductos; track $index) {
+        <tbody class="bg-slate-100 text-red-700">
+          @for (item of dataReponseProductos; track item.id) {
             <tr>
               <td
                 class="border-b border-slate-200 p-4 pl-8 text-slate-700 dark:border-gray-200 text-center"
@@ -62,59 +60,98 @@ background-image: radial-gradient(
               <td
                 class="border-b border-slate-200 p-4 pl-8 text-slate-700 dark:border-gray-200 text-center"
               >
-                {{item.precio}}
+               $ {{item.precio}}
               </td>
               <td
-                class="border-b border-slate-200 p-4 pl-8 text-slate-700 dark:border-gray-200 text-center "
+                class="border-b border-slate-200 p-4 pl-8 text-slate-700 dark:border-gray-200 text-center"
               >
                 <span>
                   {{item.categoria}}
-
                 </span>
               </td>
               <td
-                class="border-b border-slate-200 p-4 pl-8 text-slate-700 dark:border-gray-200 flex gap-2 text-center"
+                class="border-b border-slate-200 p-4 pl-8 text-slate-700 dark:border-gray-200 flex gap-2 text-center flex-wrap"
               >
                 <button
+                (click)="handleClickComprar(item.id)"
                   class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 text-center"
                 >
                   Comprar
                 </button>
-                <button
+                <button (click)="openEditarModal(item)"
                   class="bg-amber-500 text-white p-2 rounded-lg hover:bg-amber-600"
                 >
                   Editar
                 </button>
                 <button
-                  class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600"
+                  class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600" (click)="handleClickDeleteProducto(item.id)"
                 >
                   Eliminar
                 </button>
               </td>
             </tr>
           }
-        
         </tbody>
       </table>
     }
     @if (selectedIdx === 2) {
       <div class="fade-in">
-        Categorias  
+        Categorias
       </div>
-      
     }
   </div>
-  <div
-    class="fixed "
-    
-    style="
+
+  <div class="fixed" style="
       background: white;
       background-image: radial-gradient(
         circle at top center,
         rgba(59, 130, 246, 0.5),
         transparent 70%
       );
+    ">
+  </div>
+  
+  @if (isOpenModalEditar) {
+    <div 
+      class="fixed inset-0 backdrop-blur-3xl bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
       
-    "
-  ></div>
+      <div 
+        class="bg-white p-6 rounded-lg shadow-xl w-11/12 md:w-1/2 lg:w-md fade-in">
+        
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+          <h4 class="text-xl font-semibold text-slate-800">Editar Producto</h4>
+          <button (click)="closeEditarModal()" class="text-gray-500 hover:text-gray-800">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <form class="flex flex-col gap-2 my-4 text-slate-700" [formGroup]="form" (ngSubmit)="handleSaveProducto()">
+          @for (field of formFields; track $index) {
+            <label for=""   [hidden]="field.controlName === `id` ">{{field.placeholder}}</label>
+            <input 
+              
+              [type]="field.name === 'cantidad' || field.name === 'precion' ? 'number' : 'text'" 
+              class="base-input" 
+              [hidden]="field.controlName === `id` "
+              [formControlName]="field.controlName" 
+              [placeholder]="field.placeholder"
+              [readonly]="field.name === 'id'"
+            >
+          }
+        </form>
+        
+        <div class="mt-4 flex justify-end gap-2">
+          <button type="button" (click)="closeEditarModal()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
+            Cancelar
+          </button>
+          <button type="submit"  class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-400" (click)="handleSaveProducto()">
+            Guardar cambios
+          </button>
+        </div>
+        
+      </div>
+    </div>
+  }
 </div>
