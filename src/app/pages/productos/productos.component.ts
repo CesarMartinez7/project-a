@@ -4,13 +4,13 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherUsers } from '@ng-icons/feather-icons';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms'; // Cambiado de ReactiveFormsModule a FormsModule
 import { GlobalService } from '../../core/services/http.service';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-productos',
-  standalone: true, // Se cambió a standalone
-  imports: [NavbarComponent, NgIcon, CommonModule, RouterModule, ReactiveFormsModule],
+  standalone: true,
+  imports: [NavbarComponent, NgIcon, CommonModule, RouterModule, FormsModule], // Cambiado ReactiveFormsModule por FormsModule
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css',
   viewProviders: [provideIcons({ featherUsers })]
@@ -22,30 +22,36 @@ export class ProductosComponent implements OnInit {
   dataResponseCategorias!: any;
   dataReponseProductos!: any;
 
+  // Estados para los modales
+  isOpenModalCrear = false;
   isOpenModalEditar = false;
 
-  currentId = null
-
   selectedIdx = 1;
-  
-  // El formulario ahora tiene todos los campos del producto
-  form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.form = fb.group({
-      id: [{ value: '', disabled: true }], // El ID del producto, deshabilitado para no ser editable
-      nombre: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      categoria: ['', Validators.required],
-      cantidad: ['', [Validators.required, Validators.min(1)]],
-      precio: ['', [Validators.required, Validators.min(0)]]
-    });
-  }
+  // Objeto para el producto nuevo (crear)
+  nuevoProducto = {
+    nombre: '',
+    descripcion: '',
+    category_id: '',
+    cantidad: 0,
+    precio: 0
+  };
+
+  // Objeto para editar producto
+  productoEditar = {
+    id: '',
+    nombre: '',
+    descripcion: '',
+    category_id: '',
+    cantidad: 0,
+    precio: 0
+  };
+
+  constructor() {}
 
   goToCategorias() {
     this.selectedIdx = 2;
   }
-
 
   getCategorias(){
     this.__GLOBAL_SERVICE.__HTTP.get("http://127.0.0.1:8000/view_category/data").subscribe({
@@ -90,89 +96,131 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-   formFields = [
-    {
-      name: "id",
-      placeholder: "Ingrese el ID",
-      controlName: "id"
-    },
-    {
-      name: "nombre",
-      placeholder: "Ingrese el nombre",
-      controlName: "nombre"
-    },
-    {
-      name: "descripcion",
-      placeholder: "Ingrese la descripción",
-      controlName: "descripcion"
-    },
-    {
-      name: "category_id",
-      placeholder: "Ingrese la categoría",
-      controlName: "categoria"
-    },
-    {
-      name: "cantidad",
-      placeholder: "Ingrese la cantidad",
-      controlName: "cantidad"
-    },
-    {
-      name: "precio",
-      placeholder: "Ingrese el precio",
-      controlName: "precio"
-    }
-  ];
-  
-  
-  // Nuevo método para abrir la modal y cargar los datos
-  openEditarModal(item: any) {
+  // =============== MÉTODOS PARA CREAR PRODUCTO ===============
 
-    this.currentId = item.id
-
-    // Rellenar el formulario con los datos del producto seleccionado
-    this.form.patchValue({
-      id: item.id,
-      nombre: item.nombre,
-      description: item.description,
-      categoria: item.categoria,
-      cantidad: item.cantidad,
-      precio: item.precio
-    });
-    this.isOpenModalEditar = true;
+  // Abrir modal de crear producto
+  openCrearModal() {
+    // Limpiar el formulario
+    this.nuevoProducto = {
+      nombre: '',
+      descripcion: '',
+      category_id: '',
+      cantidad: 0,
+      precio: 0
+    };
+    this.isOpenModalCrear = true;
   }
 
-  // Método para cerrar la modal sin guardar
-  closeEditarModal() {
-    this.isOpenModalEditar = false;
-    this.form.reset(); // Opcional: limpiar el formulario al cerrar
+  // Cerrar modal de crear producto
+  closeCrearModal() {
+    this.isOpenModalCrear = false;
+    // Limpiar el formulario
+    this.nuevoProducto = {
+      nombre: '',
+      descripcion: '',
+      category_id: '',
+      cantidad: 0,
+      precio: 0
+    };
   }
 
-  // Método para guardar los cambios del formulario
-  handleSaveProducto() {
-    // El ID del producto lo obtenemos del formulario
-    const productId = this.form.get('id')?.value;
-    const body = this.form.getRawValue(); // Usa getRawValue para incluir campos deshabilitados (como el ID)
-    
-    // Validar el formulario antes de enviar
-    if (this.form.invalid) {
-      this.__GLOBAL_SERVICE.__NOTYF.error("Por favor, complete todos los campos requeridos.");
+  // Crear nuevo producto
+  handleCrearProducto() {
+    // Validaciones básicas
+    if (!this.nuevoProducto.nombre || !this.nuevoProducto.descripcion || 
+        !this.nuevoProducto.category_id || this.nuevoProducto.cantidad <= 0 || 
+        this.nuevoProducto.precio <= 0) {
+      this.__GLOBAL_SERVICE.__NOTYF.error("Por favor, complete todos los campos correctamente.");
       return;
     }
 
-    this.__GLOBAL_SERVICE.__HTTP.post(`http://127.0.0.1:8000/edit_product/${productId}`, body).subscribe({
+    const body = {
+      nombre: this.nuevoProducto.nombre,
+      descripcion: this.nuevoProducto.descripcion,
+      category_id: this.nuevoProducto.category_id,
+      cantidad: this.nuevoProducto.cantidad,
+      precio: this.nuevoProducto.precio
+    };
+
+    this.__GLOBAL_SERVICE.__HTTP.post('http://127.0.0.1:8000/create_product/', body).subscribe({
       next: (resp) => {
+        console.log(resp)
+        this.__GLOBAL_SERVICE.__NOTYF.success("Producto creado correctamente");
+        this.getProductos(); // Actualizar la lista de productos
+        this.closeCrearModal(); // Cerrar la modal después de crear
+      },
+      error: (err) => {
+        console.log(err);
+        this.__GLOBAL_SERVICE.__NOTYF.error("Error al crear el producto");
+      }
+    });
+  }
+
+  // =============== MÉTODOS PARA EDITAR PRODUCTO ===============
+
+  // Abrir modal de editar y cargar los datos
+  openEditarModal(item: any) {
+    // Cargar los datos del producto en el objeto de edición
+    this.productoEditar = {
+      id: item.id,
+      nombre: item.nombre,
+      descripcion: item.descripcion,
+      category_id: item.categoria, // Nota: podría necesitar ajuste según la estructura de datos
+      cantidad: item.cantidad,
+      precio: item.precio
+    };
+    this.isOpenModalEditar = true;
+  }
+
+  // Cerrar modal de editar
+  closeEditarModal() {
+    this.isOpenModalEditar = false;
+    // Limpiar el objeto de edición
+    this.productoEditar = {
+      id: '',
+      nombre: '',
+      descripcion: '',
+      category_id: '',
+      cantidad: 0,
+      precio: 0
+    };
+  }
+
+  // Guardar cambios del producto editado
+  handleSaveProducto() {
+    // Validaciones básicas
+    if (!this.productoEditar.nombre || !this.productoEditar.descripcion || 
+        !this.productoEditar.category_id || this.productoEditar.cantidad <= 0 || 
+        this.productoEditar.precio <= 0) {
+      this.__GLOBAL_SERVICE.__NOTYF.error("Por favor, complete todos los campos correctamente.");
+      return;
+    }
+
+    const body = {
+      id: this.productoEditar.id,
+      nombre: this.productoEditar.nombre,
+      descripcion: this.productoEditar.descripcion,
+      category_id: this.productoEditar.category_id,
+      cantidad: this.productoEditar.cantidad,
+      precio: this.productoEditar.precio
+    };
+
+    this.__GLOBAL_SERVICE.__HTTP.post(`http://127.0.0.1:8000/edit_product/`, body).subscribe({
+      next: (resp) => {
+        console.log(resp)
         this.__GLOBAL_SERVICE.__NOTYF.success("Producto actualizado correctamente");
         this.getProductos(); // Actualizar la lista de productos
         this.closeEditarModal(); // Cerrar la modal después de guardar
       },
       error: (err) => {
+        console.log(err);
         this.__GLOBAL_SERVICE.__NOTYF.error("Error al actualizar el producto");
       }
     });
   }
-  
 
   handleClickComprar(id: string) {
     // Lógica para comprar
+    console.log('Comprar producto con ID:', id);
   }
 }
