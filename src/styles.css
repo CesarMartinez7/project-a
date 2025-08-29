@@ -15,7 +15,7 @@
 }
 
 .btn-primary {
-  @apply cursor-pointer hover:bg-slate-200 transition-all p-2 rounded-lg bg-slate-100 h-10;
+  @apply cursor-pointer hover:bg-slate-200 transition-all p-2 rounded-lg bg-slate-200 h-10;
 }
 
 .arcticons--870-games {
