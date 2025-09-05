@@ -86,7 +86,7 @@ export class ProductosComponent implements OnInit {
   }
 
   handleClickDeleteProducto(id: string) {
-    this.__GLOBAL_SERVICE.__HTTP.delete(`${env.url}${env.port}/delete/${id}`).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.delete(`${env.url}${env.port}/product/delete/${id}`).subscribe({
       next: (resp) => {
         this.__GLOBAL_SERVICE.__NOTYF.success("Producto eliminado correctamente");
         this.getProductos(); // Actualizar la lista después de eliminar
@@ -96,7 +96,6 @@ export class ProductosComponent implements OnInit {
       }
     });
   }
-
 
 
   // Abrir modal de crear producto
@@ -206,7 +205,7 @@ export class ProductosComponent implements OnInit {
       price: this.productoEditar.price
     };
 
-    this.__GLOBAL_SERVICE.__HTTP.put(`${env.url}${env.port}/edit_product/`, body).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.put(`${env.url}${env.port}/product/edit`, body).subscribe({
       next: (resp) => {
         console.log(resp)
         this.__GLOBAL_SERVICE.__NOTYF.success("Producto actualizado correctamente");
