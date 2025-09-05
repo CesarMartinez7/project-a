@@ -220,7 +220,6 @@ export class ProductosComponent implements OnInit {
   }
 
   handleClickComprar(id: string) {
-    // Lógica para comprar
     console.log('Comprar producto con ID:', id);
   }
 }
