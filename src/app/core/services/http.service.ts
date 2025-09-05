@@ -6,6 +6,8 @@ import { Notyf } from 'notyf';
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class GlobalService {
 
   __HTTP = inject(HttpClient)
