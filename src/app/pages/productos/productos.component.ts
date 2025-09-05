@@ -55,7 +55,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getCategorias(){
-    this.__GLOBAL_SERVICE.__HTTP.get<any[]>(`${env.url}${env.port}/view/data`).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.get<any[]>(`${env.url}${env.port}/category/view/data`).subscribe({
       next: (resp) => {
         this.dataResponseCategorias = resp
       },error: (err) => {
@@ -69,7 +69,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getProductos() {
-    this.__GLOBAL_SERVICE.__HTTP.get<any[]>(`${env.url}${env.port}/view/data`).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.get<any[]>(`${env.url}${env.port}/product/view/data`).subscribe({
       next: (resp) => {
         this.dataReponseProductos = resp;
         console.log(this.dataReponseProductos)
@@ -101,7 +101,6 @@ export class ProductosComponent implements OnInit {
 
   // Abrir modal de crear producto
   openCrearModal() {
-
     // Limpiar el formulario
     this.nuevoProducto = {
       nombre: '',
