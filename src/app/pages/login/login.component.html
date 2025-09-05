@@ -29,8 +29,15 @@ linear-gradient(180deg, #f7eaff 0%, #fde2ea 100%);">
       />
       
 
-      <button class="mt-2 w-full py-2 rounded-lg bg-violet-500 text-white text-sm font-semibold shadow-md hover:bg-violet-600 transition-all hover:scale-105" >Iniciar</button>
-      <a class="text-xs text-center text-violet-500 underline my-2" routerLink="/registro"  >No tienes cuenta? Registrate.</a>
+      <button class="mt-2 w-full py-2 rounded-lg bg-violet-500 text-white text-sm font-semibold shadow-md hover:bg-violet-600 transition-all hover:scale-105 disabled:bg-violet-300 cursor-wait!" [ngClass]="{
+        `cursor-wait! pointer-events-none!`: isLodingFetch 
+      }" [disabled]="isLodingFetch" (click)="handleSubmitForm()"  >
+        {{isLodingFetch ? "Cargando ..." : "Iniciar"}}  
+      </button>
+      
+      <button class="text-xs text-center text-violet-500 underline my-2 disabled:text-violet-300 disabled:cursor-wait! " routerLink="/registro" [ngClass]="{
+        `cursor-wait! pointer-events-none!`: isLodingFetch
+      }"  [disabled]="isLodingFetch" >No tienes cuenta? Registrate.</button>
     </form>
   </div>
 </div>

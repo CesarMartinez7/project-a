@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Cambiado de ReactiveFormsModule a FormsModule
 import { GlobalService } from '../../core/services/http.service';
+import { environment as env } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-productos',
@@ -54,7 +55,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getCategorias(){
-    this.__GLOBAL_SERVICE.__HTTP.get<any[]>("http://127.0.0.1:8000/view_category/data").subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.get<any[]>(`${env.url}${env.port}/view/data`).subscribe({
       next: (resp) => {
         this.dataResponseCategorias = resp
       },error: (err) => {
@@ -68,7 +69,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getProductos() {
-    this.__GLOBAL_SERVICE.__HTTP.get<any[]>("http://127.0.0.1:8000/view_product/data").subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.get<any[]>(`${env.url}${env.port}/view/data`).subscribe({
       next: (resp) => {
         this.dataReponseProductos = resp;
         console.log(this.dataReponseProductos)
@@ -85,7 +86,7 @@ export class ProductosComponent implements OnInit {
   }
 
   handleClickDeleteProducto(id: string) {
-    this.__GLOBAL_SERVICE.__HTTP.delete(`http://127.0.0.1:8000/delete/${id}`).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.delete(`${env.url}${env.port}/delete/${id}`).subscribe({
       next: (resp) => {
         this.__GLOBAL_SERVICE.__NOTYF.success("Producto eliminado correctamente");
         this.getProductos(); // Actualizar la lista después de eliminar
@@ -143,7 +144,7 @@ export class ProductosComponent implements OnInit {
       price: this.nuevoProducto.price
     };
 
-    this.__GLOBAL_SERVICE.__HTTP.post('http://127.0.0.1:8000/create_product/', body).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.post(`${env.url}${env.port}/product/create`, body).subscribe({
       next: (resp) => {
         console.log(resp)
         this.__GLOBAL_SERVICE.__NOTYF.success("Producto creado correctamente");
@@ -206,7 +207,7 @@ export class ProductosComponent implements OnInit {
       price: this.productoEditar.price
     };
 
-    this.__GLOBAL_SERVICE.__HTTP.put(`http://127.0.0.1:8000/edit_product/`, body).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.put(`${env.url}${env.port}/edit_product/`, body).subscribe({
       next: (resp) => {
         console.log(resp)
         this.__GLOBAL_SERVICE.__NOTYF.success("Producto actualizado correctamente");

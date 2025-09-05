@@ -26,6 +26,8 @@ export class LoginComponent implements OnInit { // Implements OnInit is necessar
   response!: any;
   _ROUTER = inject(Router)
 
+  isLodingFetch = false
+
   constructor(private fb: FormBuilder) {
     this.form = fb.group({
       nombre: ['', Validators.required],
@@ -38,7 +40,7 @@ export class LoginComponent implements OnInit { // Implements OnInit is necessar
   }
 
   handleSubmitForm() {
-    
+    this.isLodingFetch = true
     if (this.form.invalid) {      
       this._SERVICE_HTTP.__NOTYF.error("Por favor, completa todos los campos.")
       return;
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit { // Implements OnInit is necessar
     };
     
   
-    this._SERVICE_HTTP.__HTTP.post("http://127.0.0.1:8000/login", body).subscribe({
+    this._SERVICE_HTTP.__HTTP.post("http://127.0.0.1:8000/login/sign_in", body).subscribe({
       next: (res) => {
         this.response = res;
         console.log(res)
