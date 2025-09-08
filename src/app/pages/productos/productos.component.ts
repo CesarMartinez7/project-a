@@ -9,11 +9,12 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'; 
 import { GlobalService } from '../../core/services/http.service';
 import { environment as env } from '../../../environments/environment.development';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterModule, FormsModule], 
+  imports: [NavbarComponent, CommonModule, RouterModule, FormsModule, JsonPipe], 
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css',
   viewProviders: [provideIcons({ featherUsers })]
@@ -22,7 +23,7 @@ export class ProductosComponent implements OnInit {
 
   __GLOBAL_SERVICE = inject(GlobalService);
 
-  dataResponseCategorias!: any[];
+  dataResponseCategorias!: any[]  ;
   dataReponseProductos!: any[];
 
   // Estados para los modales
@@ -59,7 +60,7 @@ export class ProductosComponent implements OnInit {
   getCategorias(){
     this.__GLOBAL_SERVICE.__HTTP.get<any[]>(`${env.url}${env.port}/category/view/data`).subscribe({
       next: (resp) => {
-        this.dataResponseCategorias = resp
+        console.log()
       },error: (err) => {
         this.__GLOBAL_SERVICE.__NOTYF.error("Error al obtener las categorias")
       }

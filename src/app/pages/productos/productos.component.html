@@ -194,15 +194,20 @@ dsfdf
         />
 
         <label>Categoría</label>
+
         <select
           [(ngModel)]="nuevoProducto.category_id"
           class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-slate-700"
         >
           <option value="">Seleccione una categoría</option>
-          @for (categoria of dataResponseCategorias; track $index) {
-          <option [value]="categoria.Cat_id">
-            {{ categoria.Cat_name }}
-          </option>
+          @if (dataResponseCategorias) {
+            @for (categoria of dataResponseCategorias; track $index) {
+            <option [value]="categoria.Cat_id">
+              {{ categoria.Cat_name }}
+            </option>
+            }
+
+          
           }
         </select>
 
