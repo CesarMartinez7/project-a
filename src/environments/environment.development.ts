@@ -1,4 +1,4 @@
 export const environment = {
-    url: "http://127.0.0.1:",
+    url: "http://localhost:",
     port: "8000"
 };
