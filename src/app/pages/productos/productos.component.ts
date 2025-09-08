@@ -1,17 +1,19 @@
+// HECHO CON 0 AMOR POR CESARMARTINEZ 🤶
+
 import { Component, inject, OnInit } from '@angular/core';
 import { NavbarComponent } from "../../core/components/navbar/navbar.component";
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherUsers } from '@ng-icons/feather-icons';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // Cambiado de ReactiveFormsModule a FormsModule
+import { FormsModule } from '@angular/forms'; 
 import { GlobalService } from '../../core/services/http.service';
 import { environment as env } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterModule, FormsModule], // Cambiado ReactiveFormsModule por FormsModule
+  imports: [NavbarComponent, CommonModule, RouterModule, FormsModule], 
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css',
   viewProviders: [provideIcons({ featherUsers })]
