@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { GlobalService } from '../../core/services/http.service';
 import { Router } from '@angular/router';
+import { environment as env, environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-login',
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit { // Implements OnInit is necessar
     };
     
   
-    this._SERVICE_HTTP.__HTTP.post("http://127.0.0.1:8000/login/sign_in", body).subscribe({
+    this._SERVICE_HTTP.__HTTP.post(`http://127.0.0.1:8000/login/sign_in ${env.url}${environment.port} `, body).subscribe({
       next: (res) => {
         this.response = res;
         console.log(res)

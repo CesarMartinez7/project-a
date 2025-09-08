@@ -55,7 +55,15 @@ dsfdf
               <span>No hay categorias actualmente</span>
             </div>
           }@else {
-            
+            @for (categoria of dataResponseCategorias; track $index) {
+              <tr >
+                <td
+                  class="border-b border-slate-200  text-slate-700 dark:border-gray-200 text-center "
+                >
+                  {{ categoria.Cat_id }} {{categoria.Cat_name}}
+                </td>     
+              </tr>
+            }
           }
   
           @for (item of dataReponseProductos; track item.id) {
