@@ -23,8 +23,8 @@ export class ProductosComponent implements OnInit {
 
   __GLOBAL_SERVICE = inject(GlobalService);
 
-  dataResponseCategorias!: any[]  ;
-  dataReponseProductos!: any[];
+  dataResponseCategorias: any[] = [] ;
+  dataReponseProductos: any[] = [];
 
   // Estados para los modales
   isOpenModalCrear = false;
@@ -58,9 +58,10 @@ export class ProductosComponent implements OnInit {
   }
 
   getCategorias(){
-    this.__GLOBAL_SERVICE.__HTTP.get<any[]>(`${env.url}${env.port}/category/view/data`).subscribe({
+    this.__GLOBAL_SERVICE.__HTTP.get<any>(`${env.url}${env.port}/category/view/data`).subscribe({
       next: (resp) => {
         console.log()
+        this.dataResponseCategorias = resp.data
       },error: (err) => {
         this.__GLOBAL_SERVICE.__NOTYF.error("Error al obtener las categorias")
       }
