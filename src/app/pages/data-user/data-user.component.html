@@ -1,0 +1,85 @@
+<div class="h-screen flex justify-center items-center w-full">
+    <div class="p-6 bg-white shadow-2xl rounded-lg w-xl">
+        <h2 class="text-2xl font-bold mb-6 text-gray-700">Editar Usuario</h2>
+        
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          
+          <div class="mb-4">
+            <label for="id" class="block text-gray-700 text-sm font-bold mb-2">ID</label>
+            <input 
+              id="id" 
+              type="text" 
+              formControlName="id" 
+              class="input-base bg-gray-100 cursor-not-allowed"
+            >
+          </div>
+      
+          <div class="mb-4">
+            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Nombre de usuario</label>
+            <input 
+              id="username" 
+              type="text" 
+              formControlName="username" 
+              class="input-base"
+              [class.border-red-500]="userForm.get('username')?.invalid && userForm.get('username')?.touched"
+            >
+            <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="text-red-500 text-xs italic mt-1">
+              El nombre de usuario es requerido.
+            </div>
+          </div>
+      
+          <div class="mb-4">
+            <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Teléfono</label>
+            <input 
+              id="phone" 
+              type="tel" 
+              formControlName="phone" 
+              class="input-base"
+              [class.border-red-500]="userForm.get('phone')?.invalid && userForm.get('phone')?.touched"
+            >
+            <div *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched" class="text-red-500 text-xs italic mt-1">
+              El teléfono es requerido y debe ser un número.
+            </div>
+          </div>
+      
+          <div class="mb-4">
+            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+            <input 
+              id="email" 
+              type="email" 
+              formControlName="email" 
+              class="input-base"
+              [class.border-red-500]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+            >
+            <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-red-500 text-xs italic mt-1">
+              Debe ser un correo válido.
+            </div>
+          </div>
+      
+          <div class="mb-6">
+            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
+            <input 
+              id="password" 
+              type="password" 
+              formControlName="password" 
+              class="input-base"
+              [class.border-red-500]="userForm.get('password')?.invalid && userForm.get('password')?.touched"
+            >
+            <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-red-500 text-xs italic mt-1">
+              La contraseña debe tener al menos 6 caracteres.
+            </div>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <button 
+              type="submit" 
+              class="btn-primary-violet"
+              [disabled]="userForm.invalid"
+            >
+              Guardar cambios
+            </button>
+          </div>
+        </form>
+      </div>
+
+</div>

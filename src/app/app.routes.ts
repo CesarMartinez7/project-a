@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
+import { UserFormComponent } from './pages/data-user/data-user.component';
 
 // SI EN UN FUTURO ALGUIEN TOCA ESTE CODIGO, MUY POCO PROBABLE, ENTONCES TENER LAS MEJORES PRACTICAS, ESTOY PROYECTO ES UNA MRD
 
@@ -24,6 +25,10 @@ export const routes: Routes = [
   {
     path: 'shopping',
     component: CarritoComponent,
+  },
+  {
+    path: 'user-form',
+    component: UserFormComponent,
   },
   { path: '**', redirectTo: 'login' },
 ];

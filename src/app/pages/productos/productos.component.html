@@ -1,275 +1,338 @@
-<div class="min-h-screen w-full bg-white backdrop-blur-3xl text-xs " style="
+<div
+  class="min-h-screen w-full bg-white backdrop-blur-3xl text-xs"
+  style="
     background: white;
     background-image: radial-gradient(
       circle at top left,
-      rgba(59, 130, 246, 0.3),
+      rgba(79, 107, 154, 0.3),
       transparent 70%
     );
-  ">
+  "
+>
   <app-navbar />
-  <div class="arcticons--870-games-big text-slate-200/30 absolute inset-0 pointer-events-none z-10">
-  </div>
+  <div
+    class="arcticons--870-games-big text-slate-200/30 absolute inset-0 pointer-events-none z-10"
+  ></div>
   <div class="md:px-12 px-4 py-5">
-    <div class="flex justify-between items-center">
-      <h3 class="text-slate-700 font-bold text-2xl my-5">Dashboard Gestion</h3>
-      <div class="flex gap-4">
-        <button class="btn-primary" (click)="openCrearModal()">Agregar producto</button>
-        <div class="space-x-1">
-          <button class="btn-primary" [ngClass]="{
-            `bg-slate-300!`: selectedIdx === 2
-          }" (click)="goToCategorias()">
-            Categorias
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+      <h3 class="text-slate-700 font-bold text-2xl my-5">Dashboard de Gestión</h3>
+      <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+        <button class="btn-primary" (click)="openCrearModal()">
+          <ng-icon name="featherPlus" />
+          Agregar producto
+        </button>
+        <div class="space-x-1 flex w-full">
+          <button
+            class="btn-primary flex-1"
+            [ngClass]="{ 'bg-slate-300': selectedIdx === 2 }"
+            (click)="goToCategorias()"
+          >
+            Categorías
           </button>
-          <button class="btn-primary" [ngClass]="{
-            `bg-slate-300!`: selectedIdx === 1
-          }" (click)="goToProductos()">Registros</button>
+          <button
+            class="btn-primary flex-1"
+            [ngClass]="{ 'bg-slate-300': selectedIdx === 1 }"
+            (click)="goToProductos()"
+          >
+            Registros
+          </button>
         </div>
       </div>
     </div>
 
     @if (selectedIdx === 1) {
-    <table class="table-fixed text-slate-700 w-full text-xs overflow-y-auto max-h-[80%] fade-in">
-      <thead>
-        <tr>
-          <th class="p-3 bg-slate-200">Id</th>
-          <th class="p-3 bg-slate-200">Nombre</th>
-          <th class="p-3 bg-slate-200">Descripcion</th>
-          <th class="p-3 bg-slate-200">Cantidad</th>
-          <th class="p-3 bg-slate-200">Precio</th>
-          <th class="p-3 bg-slate-200">Categorias</th>
-          <th class="p-3 bg-slate-200">Opciones</th>
-        </tr>
-      </thead>
-      <tbody class="bg-slate-100 text-red-700">
-        @if (dataResponseCategorias) {
-        @if ( dataReponseProductos.length === 0) {
-        <div class="mx-auto w-full max-w-sm rounded-md border border-blue-300 p-4">
-          <div class="flex animate-pulse space-x-4">
-            <div class="size-10 rounded-full bg-gray-200"></div>
-            <div class="flex-1 space-y-6 py-1">
-              <div class="h-2 rounded bg-gray-200"></div>
-              <div class="space-y-3">
-                <div class="grid grid-cols-3 gap-4">
-                  <div class="col-span-2 h-2 rounded bg-gray-200"></div>
-                  <div class="col-span-1 h-2 rounded bg-gray-200"></div>
+    <div class="overflow-x-auto">
+      <table class="table-auto text-slate-700 w-full text-xs">
+        <thead>
+          <tr class="bg-slate-200 text-slate-800">
+            <th class="p-3">Id</th>
+            <th class="p-3">Nombre</th>
+            <th class="p-3">Descripción</th>
+            <th class="p-3">Cantidad</th>
+            <th class="p-3">Precio</th>
+            <th class="p-3">Categoría</th>
+            <th class="p-3">Opciones</th>
+          </tr>
+        </thead>
+        <tbody class="bg-slate-100">
+          @if (isLoading) { 
+            @for (item of [1,2,3,4,5,6,7,8,9,10,11,12]; track $index) {
+              <tr class="w-full h-12">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="h-4 bg-gray-300 rounded animate-pulse w-3/4"></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="h-4 bg-gray-300 rounded animate-pulse w-1/2"></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="h-4 bg-gray-300 rounded animate-pulse w-2/3"></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="h-4 bg-gray-300 rounded animate-pulse w-2/3"></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="h-4 bg-gray-300 rounded animate-pulse w-2/3"></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="h-4 bg-gray-300 rounded animate-pulse w-2/3"></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="h-4 bg-gray-300 rounded animate-pulse w-2/3"></div>
+                </td>
+              </tr>
+            }
+          } @else {
+            @for (item of dataReponseProductos; track item.id) {
+            <tr class="hover:bg-slate-200 transition-colors">
+              <td class="border-b border-slate-200 p-2 text-center">{{ item.id }}</td>
+              <td class="border-b border-slate-200 p-2 text-center">{{ item.nombre }}</td>
+              <td class="border-b border-slate-200 p-2 text-center">{{ item.descripcion }}</td>
+              <td class="border-b border-slate-200 p-2 text-center">{{ item.cantidad }}</td>
+              <td class="border-b border-slate-200 p-2 text-center">$ {{ item.precio }}</td>
+              <td class="border-b border-slate-200 p-2 text-center">
+                <span>{{ item.categoria }}</span>
+              </td>
+              <td class="border-b border-slate-200 p-2 text-center">
+                <div class="flex gap-2 justify-center flex-wrap">
+                  <button
+                    (click)="handleClickComprar(item.id)"
+                    class="btn-icon bg-blue-500 hover:bg-blue-600"
+                  >
+                    <ng-icon name="featherShoppingCart" />
+                  </button>
+                  <button
+                    (click)="openEditarModal(item)"
+                    class="btn-icon bg-amber-500 hover:bg-amber-600"
+                  >
+                    <ng-icon name="featherEdit" />
+                  </button>
+                  <button
+                    class="btn-icon bg-red-500 hover:bg-red-600"
+                    (click)="handleClickDeleteProducto(item.id)"
+                  >
+                    <ng-icon name="featherTrash2" />
+                  </button>
                 </div>
-                <div class="h-2 rounded bg-gray-200"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mx-auto w-full max-w-sm rounded-md border border-blue-300 p-4">
-          <div class="flex animate-pulse space-x-4">
-            <div class="size-10 rounded-full bg-gray-200"></div>
-            <div class="flex-1 space-y-6 py-1">
-              <div class="h-2 rounded bg-gray-200"></div>
-              <div class="space-y-3">
-                <div class="grid grid-cols-3 gap-4">
-                  <div class="col-span-2 h-2 rounded bg-gray-200"></div>
-                  <div class="col-span-1 h-2 rounded bg-gray-200"></div>
-                </div>
-                <div class="h-2 rounded bg-gray-200"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        }
-
-        @for (item of dataReponseProductos; track item.id) {
-        <tr>
-          <td class="border-b border-slate-200  text-slate-700 dark:border-gray-200 text-center ">
-            {{ item.id }}
-          </td>
-          <td class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center">
-            {{ item.nombre }}
-          </td>
-          <td class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center">
-            {{ item.descripcion }}
-          </td>
-          <td class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center">
-            {{ item.cantidad }}
-          </td>
-          <td class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center">
-            $ {{ item.precio }}
-          </td>
-          <td class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 text-center">
-            <span>
-              {{ item.categoria }}
-            </span>
-          </td>
-          <td
-            class="border-b border-slate-200 p-1 text-slate-700 dark:border-gray-200 flex gap-2 text-center flex-wrap">
-            <button (click)="handleClickComprar(item.id)"
-              class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 text-center">
-              Comprar
-            </button>
-            <button (click)="openEditarModal(item)" class="bg-amber-500 text-white p-2 rounded-lg hover:bg-amber-600">
-              Editar
-            </button>
-            <button class="bg-red-500 text-white p-2 rounded-lg " (click)="handleClickDeleteProducto(item.id)">
-              Eliminar
-            </button>
-          </td>
-        </tr>
-        }
-        }
-      </tbody>
-    </table>
+              </td>
+            </tr>
+            }
+          }
+          @if (!isLoading && dataReponseProductos.length === 0) {
+            <tr>
+              <td colspan="7" class="p-4 text-center text-gray-500 h-52">
+                No hay productos para mostrar. ¡Agrega uno!
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
     } @if (selectedIdx === 2) {
-
-
-    <table class="table-fixed text-slate-700 w-full text-xs overflow-y-auto max-h-[80%] fade-in">
-
-      <thead>
-        <tr>
-          <th class="p-3 bg-slate-200">Id</th>
-          <th class="p-3 bg-slate-200">Nombre</th>
-        </tr>
-      </thead>
-
-      <tbody class="bg-slate-100 text-red-700">
-        @for (categoria of dataResponseCategorias; track $index) {
-        <tr class=" p-2 text-center ">
-          <td class="border-b p-2 border-slate-200 w-full  text-slate-700 dark:border-gray-200 text-center ">
-            {{ categoria.Cat_id }}
-          </td>
-          <td
-            class="w-full p-2 text-center border-slate-200 border-b  w-full  text-slate-700 dark:border-gray-200 text-center">
-            {{categoria.Cat_name}}
-          </td>
-        </tr>
-        }
-
-      </tbody>
-    </table>
+      <div class="overflow-x-auto">
+        <table class="table-auto text-slate-700 w-full text-xs fade-in">
+          <thead>
+            <tr class="bg-slate-200 text-slate-800">
+              <th class="p-3">Id</th>
+              <th class="p-3">Nombre</th>
+            </tr>
+          </thead>
+          <tbody class="bg-slate-100">
+            @for (categoria of dataResponseCategorias; track $index) {
+            <tr class="p-2 text-center hover:bg-slate-200 transition-colors">
+              <td class="border-b p-2 border-slate-200 text-slate-700">{{ categoria.Cat_id }}</td>
+              <td class="border-b p-2 border-slate-200 text-slate-700">{{ categoria.Cat_name }}</td>
+            </tr>
+            }
+            @if (dataResponseCategorias.length === 0) {
+              <tr>
+                <td colspan="2" class="p-4 text-center text-gray-500">
+                  No hay categorías para mostrar.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     }
   </div>
 
-  <div class="fixed" style="
-      background: white;
-      background-image: radial-gradient(
-        circle at top center,
-        rgba(59, 130, 246, 0.5),
-        transparent 70%
-      );
-    "></div>
-
-  <!-- Modal para CREAR producto -->
   @if (isOpenModalCrear) {
-  <div
-    class="fixed inset-0 backdrop-blur-3xl bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
-    <div class="bg-white p-6 rounded-lg shadow-xl w-11/12 md:w-1/2 lg:w-md fade-in">
-      <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-4">
-        <h4 class="text-xl font-semibold text-slate-800">Crear Producto</h4>
-        <button (click)="closeCrearModal()" class="text-gray-500 hover:text-gray-800">
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex flex-col gap-2 my-4 text-slate-700">
-        <label>Nombre del producto</label>
-        <input type="text" class="base-input" [(ngModel)]="nuevoProducto.nombre"
-          placeholder="Ingrese el nombre del producto" />
-
-        <label>Descripción</label>
-        <input type="text" class="base-input" [(ngModel)]="nuevoProducto.descripcion"
-          placeholder="Ingrese la descripción" />
-
-        <label>Categoría</label>
-
-        <select [(ngModel)]="nuevoProducto.category_id"
-          class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-slate-700">
-          <option value="">Seleccione una categoría</option>
-          @if (dataResponseCategorias) {
-          @for (categoria of dataResponseCategorias; track $index) {
-          <option [value]="categoria.Cat_id">
-            {{ categoria.Cat_name }}
-          </option>
-          }
-          }
-        </select>
-
-        <label>Cantidad</label>
-        <input type="number" class="base-input" [(ngModel)]="nuevoProducto.cantidad" placeholder="Ingrese la cantidad"
-          min="1" />
-
-        <label>Precio</label>
-        <input type="number" class="base-input" [(ngModel)]="nuevoProducto.price" placeholder="Ingrese el precio"
-          min="0" step="0.01" />
-
-        <div class="mt-4 flex justify-end gap-2">
-          <button type="button" (click)="closeCrearModal()"
-            class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
-            Cancelar
+    <div
+      class="fixed inset-0 backdrop-blur-2xl bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300"
+    >
+      <div
+        class="bg-white p-6 rounded-lg shadow-xl w-11/12 md:w-1/2 lg:w-1/3 fade-in"
+      >
+        <div
+          class="flex justify-between items-center border-b border-slate-200 pb-3 mb-4"
+        >
+          <h4 class="text-xl font-semibold text-slate-800">Crear Producto 🛒</h4>
+          <button (click)="closeCrearModal()" class="text-gray-500 hover:text-gray-800">
+            
+            <ng-icon name="featherX" class="size-12" size="20" />
           </button>
-          <button type="button" (click)="handleCrearProducto()"
-            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
-            Crear Producto
-          </button>
+        </div>
+
+        <div class="flex flex-col gap-3 my-4 text-slate-700">
+          <label class="font-medium text-sm">Nombre del producto</label>
+          <input
+            type="text"
+            class="base-input"
+            [(ngModel)]="nuevoProducto.nombre"
+            placeholder="Ingrese el nombre del producto"
+          />
+
+          <label class="font-medium text-sm">Descripción</label>
+          <input
+            type="text"
+            class="base-input"
+            [(ngModel)]="nuevoProducto.descripcion"
+            placeholder="Ingrese la descripción"
+          />
+
+          <label class="font-medium text-sm">Categoría</label>
+          <select
+            [(ngModel)]="nuevoProducto.category_id"
+            class="base-input-select"
+          >
+            <option value="">Seleccione una categoría</option>
+            @for (categoria of dataResponseCategorias; track $index) {
+            <option [value]="categoria.Cat_id">
+              {{ categoria.Cat_name }}
+            </option>
+            }
+          </select>
+
+          <label class="font-medium text-sm">Cantidad</label>
+          <input
+            type="number"
+            class="base-input"
+            [(ngModel)]="nuevoProducto.cantidad"
+            placeholder="Ingrese la cantidad"
+            min="1"
+          />
+
+          <label class="font-medium text-sm">Precio</label>
+          <input
+            type="number"
+            class="base-input"
+            [(ngModel)]="nuevoProducto.price"
+            placeholder="Ingrese el precio"
+            min="0"
+            step="0.01"
+          />
+
+          <div class="mt-4 flex justify-end gap-2">
+            <button
+              type="button"
+              (click)="closeCrearModal()"
+              class="btn-primary"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              (click)="handleCrearProducto()"
+              class="btn-primary-violet"
+            >
+              Crear Producto
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   }
 
-  <!-- Modal para EDITAR producto -->
   @if (isOpenModalEditar) {
-  <div
-    class="fixed inset-0 backdrop-blur-3xl bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
-    <div class="bg-white p-6 rounded-lg shadow-xl w-11/12 md:w-1/2 lg:w-md fade-in">
-      <div class="flex justify-between items-center border-b border-slate-500 pb-3 mb-4">
-        <h4 class="text-xl font-semibold text-slate-800">Editar Producto</h4>
-        <button (click)="closeEditarModal()" class="text-gray-500 hover:text-gray-800">
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex flex-col gap-2 my-4 text-slate-700">
-        <label>ID (Solo lectura)</label>
-        <input type="text" class="base-input bg-gray-100" [value]="productoEditar.id" readonly />
-
-        <label>Nombre del producto</label>
-        <input type="text" class="base-input" [(ngModel)]="productoEditar.nombre"
-          placeholder="Ingrese el nombre del producto" />
-
-        <label>Descripción</label>
-        <input type="text" class="base-input" [(ngModel)]="productoEditar.descripcion"
-          placeholder="Ingrese la descripción" />
-
-        <label>Categoría</label>
-        <select [(ngModel)]="productoEditar.category_id"
-          class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-slate-700">
-          @for (categoria of dataResponseCategorias; track $index) {
-          <option [value]="categoria.Cat_id">
-            {{ categoria.Cat_name }}
-          </option>
-          }
-        </select>
-
-        <label>Cantidad</label>
-        <input type="number" class="base-input" [(ngModel)]="productoEditar.cantidad" placeholder="Ingrese la cantidad"
-          min="1" />
-
-        <label>Precio</label>
-        <input type="number" class="base-input" [(ngModel)]="productoEditar.price" placeholder="Ingrese el precio"
-          min="0" step="0.01" />
-
-        <div class="mt-4 flex justify-end gap-2">
-          <button type="button" (click)="closeEditarModal()"
-            class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
-            Cancelar
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300"
+    >
+      <div
+        class="bg-white p-6 rounded-lg shadow-xl w-11/12 md:w-1/2 lg:w-1/3 fade-in"
+      >
+        <div
+          class="flex justify-between items-center border-b border-slate-200 pb-3 mb-4"
+        >
+          <h4 class="text-xl font-semibold text-slate-800">Editar Producto 📝</h4>
+          <button (click)="closeEditarModal()" class="text-gray-500 hover:text-gray-800">
+            <ng-icon name="featherX" class="size-6" />
           </button>
-          <button type="button" (click)="handleSaveProducto()"
-            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-            Guardar cambios
-          </button>
+        </div>
+
+        <div class="flex flex-col gap-3 my-4 text-slate-700">
+          <label class="font-medium text-sm">ID (Solo lectura)</label>
+          <input
+            type="text"
+            class="base-input bg-gray-100 cursor-not-allowed"
+            [value]="productoEditar.id"
+            readonly
+          />
+
+          <label class="font-medium text-sm">Nombre del producto</label>
+          <input
+            type="text"
+            class="base-input"
+            [(ngModel)]="productoEditar.nombre"
+            placeholder="Ingrese el nombre del producto"
+          />
+
+          <label class="font-medium text-sm">Descripción</label>
+          <input
+            type="text"
+            class="base-input"
+            [(ngModel)]="productoEditar.descripcion"
+            placeholder="Ingrese la descripción"
+          />
+
+          <label class="font-medium text-sm">Categoría</label>
+          <select
+            [(ngModel)]="productoEditar.category_id"
+            class="base-input-select"
+          >
+            @for (categoria of dataResponseCategorias; track $index) {
+            <option [value]="categoria.Cat_id">
+              {{ categoria.Cat_name }}
+            </option>
+            }
+          </select>
+
+          <label class="font-medium text-sm">Cantidad</label>
+          <input
+            type="number"
+            class="base-input"
+            [(ngModel)]="productoEditar.cantidad"
+            placeholder="Ingrese la cantidad"
+            min="1"
+          />
+
+          <label class="font-medium text-sm">Precio</label>
+          <input
+            type="number"
+            class="base-input"
+            [(ngModel)]="productoEditar.price"
+            placeholder="Ingrese el precio"
+            min="0"
+            step="0.01"
+          />
+
+          <div class="mt-4 flex justify-end gap-2">
+            <button
+              type="button"
+              (click)="closeEditarModal()"
+              class="btn-secondary"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              (click)="handleSaveProducto()"
+              class="btn-primary"
+            >
+              Guardar cambios
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   }
 </div>

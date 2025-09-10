@@ -5,186 +5,40 @@ radial-gradient(ellipse 65% 40% at 50% 60%, rgba(120, 190, 255, 0.3), transparen
 linear-gradient(180deg, #f7eaff 0%, #fde2ea 100%);">
   
   <div class="bg-white p-6 md:p-8 rounded-lg shadow-md w-full max-w-4xl">
-    <h1 class="text-3xl font-bold mb-6  text-gray-700">
+    <h1 class="text-3xl font-bold mb-6 text-gray-700">
       Mi carrito
     </h1>
 
     <div class="space-y-4">
-      <div class="flex items-center justify-between p-4 bg-gray border border-gray-100 rounded-lg">
-        <div class="flex items-center">
-            <div class="rounded-2xl animate-pulse bg-gray-300 size-6">
-
+      @for (producto of userData.productos; track producto.nombre_producto) {
+        <div class="flex items-center justify-between p-4 bg-gray border border-gray-100 rounded-lg">
+          <div class="flex items-center">
+              <div class="rounded-2xl animate-pulse bg-gray-300 size-6">
+              </div>
+            
+            <div class="ml-4">
+              <h3 class="text font-semibold text-gray-700">
+                {{ producto.nombre_producto }}
+              </h3>
+              <p class="text-sm text-gray-500">Unidades: {{ producto.cantidad }}</p>
             </div>
-          
-          <div class="ml-4">
-            <h3 class="text font-semibold text-gray-700 ">
-              Zapatillas Deportivas
-            </h3>
-            <p class="text-sm text-gray-500">Unidades: 2</p>
+          </div>
+          <div class="text-right">
+            <p class="font-medium text-gray-700">{{ producto.precio_unitario }}</p>
+            <p class="text-sm font-bold text-gray-700">Subtotal: {{ producto.subtotal }}</p>
           </div>
         </div>
-        <div class="text-right">
-          <p class=" font-medium text-gray-700">$85.00</p>
-          <p class="text-sm font-bold text-gray-700">Subtotal: $170.00</p>
-        </div>
-      </div>
-
-     
+      }
     </div>
-
-    <div class="space-y-4">
-        <div class="flex items-center justify-between p-4 bg-gray border border-gray-100 rounded-lg">
-          <div class="flex items-center">
-              <div class="rounded-2xl animate-pulse bg-gray-300 size-6">
-  
-              </div>
-            
-            <div class="ml-4">
-              <h3 class="text font-semibold text-gray-700 ">
-                Zapatillas Deportivas
-              </h3>
-              <p class="text-sm text-gray-500">Unidades: 2</p>
-            </div>
-          </div>
-          <div class="text-right">
-            <p class=" font-medium text-gray-700">$85.00</p>
-            <p class="text-sm font-bold text-gray-700">Subtotal: $170.00</p>
-          </div>
-        </div>
-  
-       
-      </div>
-
-
-      <div class="space-y-4">
-        <div class="flex items-center justify-between p-4 bg-gray border border-gray-100 rounded-lg">
-          <div class="flex items-center">
-              <div class="rounded-2xl animate-pulse bg-gray-300 size-6">
-  
-              </div>
-            
-            <div class="ml-4">
-              <h3 class="text font-semibold text-gray-700 ">
-                Zapatillas Deportivas
-              </h3>
-              <p class="text-sm text-gray-500">Unidades: 2</p>
-            </div>
-          </div>
-          <div class="text-right">
-            <p class=" font-medium text-gray-700">$85.00</p>
-            <p class="text-sm font-bold text-gray-700">Subtotal: $170.00</p>
-          </div>
-        </div>
-  
-       
-      </div>
-
-
-
-      <div class="space-y-4">
-        <div class="flex items-center justify-between p-4 bg-gray border border-gray-100 rounded-lg">
-          <div class="flex items-center">
-              <div class="rounded-2xl animate-pulse bg-gray-300 size-6">
-  
-              </div>
-            
-            <div class="ml-4">
-              <h3 class="text font-semibold text-gray-700 ">
-                Zapatillas Deportivas
-              </h3>
-              <p class="text-sm text-gray-500">Unidades: 2</p>
-            </div>
-          </div>
-          <div class="text-right">
-            <p class=" font-medium text-gray-700">$85.00</p>
-            <p class="text-sm font-bold text-gray-700">Subtotal: $170.00</p>
-          </div>
-        </div>
-  
-       
-      </div>
-
-
-
-      <div class="space-y-4">
-        <div class="flex items-center justify-between p-4 bg-gray border border-gray-100 rounded-lg">
-          <div class="flex items-center">
-              <div class="rounded-2xl animate-pulse bg-gray-300 size-6">
-  
-              </div>
-            
-            <div class="ml-4">
-              <h3 class="text font-semibold text-gray-700 ">
-                Zapatillas Deportivas
-              </h3>
-              <p class="text-sm text-gray-500">Unidades: 2</p>
-            </div>
-          </div>
-          <div class="text-right">
-            <p class=" font-medium text-gray-700">$85.00</p>
-            <p class="text-sm font-bold text-gray-700">Subtotal: $170.00</p>
-          </div>
-        </div>
-  
-       
-      </div>
-
-
-      <div class="space-y-4">
-        <div class="flex items-center justify-between p-4 bg-gray border border-gray-100 rounded-lg">
-          <div class="flex items-center">
-              <div class="rounded-2xl animate-pulse bg-gray-300 size-6">
-  
-              </div>
-            
-            <div class="ml-4">
-              <h3 class="text font-semibold text-gray-700 ">
-                Zapatillas Deportivas
-              </h3>
-              <p class="text-sm text-gray-500">Unidades: 2</p>
-            </div>
-          </div>
-          <div class="text-right">
-            <p class=" font-medium text-gray-700">$85.00</p>
-            <p class="text-sm font-bold text-gray-700">Subtotal: $170.00</p>
-          </div>
-        </div>
-  
-       
-      </div>
-
-
-      <div class="space-y-4">
-        <div class="flex items-center justify-between p-4 bg-gray border border-gray-100 rounded-lg">
-          <div class="flex items-center">
-              <div class="rounded-2xl animate-pulse bg-gray-300 size-6">
-  
-              </div>
-            
-            <div class="ml-4">
-              <h3 class="text font-semibold text-gray-700 ">
-                Zapatillas Deportivas
-              </h3>
-              <p class="text-sm text-gray-500">Unidades: 2</p>
-            </div>
-          </div>
-          <div class="text-right">
-            <p class=" font-medium text-gray-700">$85.00</p>
-            <p class="text-sm font-bold text-gray-700">Subtotal: $170.00</p>
-          </div>
-        </div>
-  
-       
-      </div>
 
     <div
       class="mt-6 pt-6 border-t border-gray-200 flex justify-end items-center"
     >
       <div class="text-right mr-4">
-        <p class=" text-gray-600">Total:</p>
+        <p class="text-gray-600">Total:</p>
       </div>
       <div class="text-right">
-        <p class="bg-gradient-to-t font-black from-violet-700 to-purple-400 bg-clip-text text-transparent">$365.00</p>
+        <p class="bg-gradient-to-t font-black from-violet-700 to-purple-400 bg-clip-text text-transparent">{{ userData.total_pagar }}</p>
       </div>
     </div>
 

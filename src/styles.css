@@ -15,8 +15,18 @@
 }
 
 .btn-primary {
-  @apply cursor-pointer hover:bg-slate-200 transition-all p-2 rounded-lg bg-slate-200 h-10;
+  @apply cursor-pointer flex justify-center-safe items-center gap-2 hover:bg-slate-200 transition-all p-2 rounded-lg bg-slate-300 h-10;
 }
+
+.btn-primary-violet {
+  @apply  px-5 py-2 rounded-lg bg-violet-500 text-white text-sm font-semibold shadow-md hover:bg-violet-600 transition-all hover:scale-105 disabled:bg-violet-300;
+}
+
+
+.input-base{
+  @apply w-full text-sm px-3 py-2 rounded-lg border border-slate-200 bg-white/70 text-slate-700 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent transition-all 
+}
+
 
 .arcticons--870-games {
   display: inline-block;
